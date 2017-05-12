@@ -33,7 +33,6 @@ public class GithubOrganization
 
   public void addUser(final String username)
   {
-    System.out.println(users.toString());
     if (!users.containsKey(username))
     {
       users.put(
@@ -43,10 +42,7 @@ public class GithubOrganization
               .scraper(scraper)
               .userCache(userCache)
               .build());
-      System.out.println("Added User:" + username);
     }
-    System.out.println("User Already Added:" + username);
-    System.out.println(users.toString());
   }
   
   public String getData()

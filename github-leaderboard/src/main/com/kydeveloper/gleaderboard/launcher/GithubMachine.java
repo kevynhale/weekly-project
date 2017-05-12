@@ -40,7 +40,6 @@ public class GithubMachine
               .userCache(userCache)
               .build());
     }
-
     return organizations.get(name);
   }
 }

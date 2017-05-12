@@ -21,7 +21,7 @@ public class SimpleConfig extends GuiceServletContextListener
       {
         /* bind the REST resources */
         bind(BoardResource.class);
-        bind(GithubMachine.class);
+        bind(GithubMachine.class).toInstance(new GithubMachine());
         final Map<String, String> initParams = new HashMap<String, String>();
         initParams.put("com.sun.jersey.config.feature.Trace",
             "true");
