@@ -4,10 +4,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import lombok.NonNull;
 
 import com.google.inject.Inject;
+import com.kydeveloper.gleaderboard.api.OrgUsersResponse;
 
 @Path("/leaderboard")
 public class BoardResource
@@ -23,16 +25,24 @@ public class BoardResource
   }
   
   @GET
-  @Produces("text/plain")
+  @Produces(MediaType.APPLICATION_JSON)
   @Path("/org/{name}")
-  public String getOrg(
+  public OrgUsersResponse getOrg(
       @PathParam("name") final String name) throws Exception
   {
-    return githubMachine.getOrg(name).getData();
+    final GithubOrganization org = githubMachine.getOrg(name);
+    return OrgUsersResponse.builder()
+        .organizationName(org.getOrgName())
+        .totalUsers(org.getUsers().size())
+        .pageNumber(0)
+        .userFilterString("")
+        .users(org.getUsers())
+        .usersPerPage(20)
+        .build();
   }
 
   @GET
-  @Produces("text/plain")
+  @Produces(MediaType.APPLICATION_JSON)
   @Path("/org/{name}/adduser/{username}")
   public String addUser(
       @PathParam("name") final String name,

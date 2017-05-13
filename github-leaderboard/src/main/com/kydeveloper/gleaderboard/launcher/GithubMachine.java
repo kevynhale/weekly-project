@@ -7,13 +7,15 @@ import lombok.NonNull;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.RemovalListener;
+import com.google.common.cache.RemovalNotification;
 
 public class GithubMachine
 {
 
   private final HashMap<String, GithubOrganization> organizations;
   
-  private final Cache<String, Integer> userCache;
+  private final Cache<String, CommitFields> userCache;
 
   @NonNull
   private final GithubScraper scraper;
@@ -22,9 +24,22 @@ public class GithubMachine
   {
     organizations = new HashMap<String, GithubOrganization>();
     this.scraper = new GithubScraper();
+
+    final RemovalListener<String, CommitFields> removalListener =
+        new RemovalListener<String, CommitFields>()
+        {
+          @Override
+          public void onRemoval(final RemovalNotification<String, CommitFields> not)
+          {
+
+            not.getValue().getUser().getCommitData();
+          }
+        };
+
     this.userCache = CacheBuilder.newBuilder()
-        .expireAfterWrite(300, TimeUnit.SECONDS)
+        .expireAfterWrite(900, TimeUnit.SECONDS)
         .maximumSize(10000)
+        .removalListener(removalListener)
         .build(new UserCacheLoader());
   }
 
