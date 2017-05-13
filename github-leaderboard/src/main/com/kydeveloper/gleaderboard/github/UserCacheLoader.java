@@ -1,4 +1,4 @@
-package com.kydeveloper.gleaderboard.launcher;
+package com.kydeveloper.gleaderboard.github;
 
 import com.google.common.cache.CacheLoader;
 

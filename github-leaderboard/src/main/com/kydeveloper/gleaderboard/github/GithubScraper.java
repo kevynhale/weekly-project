@@ -1,4 +1,4 @@
-package com.kydeveloper.gleaderboard.launcher;
+package com.kydeveloper.gleaderboard.github;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -24,7 +24,6 @@ import org.jsoup.nodes.Document;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kydeveloper.gleaderboard.github.UserAccessResponse;
 
 public class GithubScraper
 {

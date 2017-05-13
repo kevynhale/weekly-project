@@ -1,4 +1,6 @@
-package com.kydeveloper.gleaderboard.launcher;
+package com.kydeveloper.gleaderboard.rest;
+
+import java.util.List;
 
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -13,6 +15,8 @@ import lombok.NonNull;
 import com.google.inject.Inject;
 import com.kydeveloper.gleaderboard.api.OrderType;
 import com.kydeveloper.gleaderboard.api.OrgUsersResponse;
+import com.kydeveloper.gleaderboard.github.GithubMachine;
+import com.kydeveloper.gleaderboard.github.GithubOrganization;
 
 @Path("/leaderboard")
 public class BoardResource
@@ -32,20 +36,25 @@ public class BoardResource
   @Path("/org/{name}")
   public OrgUsersResponse getOrg(
       @PathParam("name") final String name,
-      @DefaultValue("todayCommits")
-      @QueryParam("order_by") final String orderBy,
-      @DefaultValue("DESC")
-      @QueryParam("order") final String order) throws Exception
+      @DefaultValue("todayCommits") @QueryParam("order_by") final String orderBy,
+      @DefaultValue("DESC") @QueryParam("order") final String order,
+      @DefaultValue("1") @QueryParam("page") final int page,
+      @DefaultValue("20") @QueryParam("page_size") final int pageSize,
+      @DefaultValue("") @QueryParam("filter") final String filter) throws Exception
   {
     final GithubOrganization org = githubMachine.getOrg(name);
 
     return OrgUsersResponse.builder()
         .organizationName(org.getOrgName())
         .totalUsers(org.getUsers().size())
-        .pageNumber(0)
+        .pageNumber(page)
         .userFilterString("")
-        .users(org.getUsers(orderBy, order))
-        .usersPerPage(20)
+        .users(
+            getPage(
+                org.getUsers(orderBy, order, filter),
+                pageSize,
+                page))
+        .usersPerPage(pageSize)
         .orderBy(orderBy)
         .order(OrderType.valueOf(order))
         .build();
@@ -60,6 +69,13 @@ public class BoardResource
   {
     githubMachine.getOrg(name).addUser(username);
     return username;
+  }
+
+  private <T> List<T> getPage(final List<T> list, final int pageSize, final int page)
+  {
+    final int start = pageSize * (page - 1);
+    final int end = start + pageSize;
+    return list.subList(start == 0 ? 0 : start, list.size() < end ? list.size() : end);
   }
 
 }

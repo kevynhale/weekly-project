@@ -1,4 +1,4 @@
-package com.kydeveloper.gleaderboard.launcher;
+package com.kydeveloper.gleaderboard.github;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -71,7 +71,10 @@ public class GithubOrganization
     return data;
   }
 
-  public List<UserResponse> getUsers(final String sortField, final String order)
+  public List<UserResponse> getUsers(
+      final String sortField,
+      final String order,
+      final String filter)
   {
 
     return users.values().stream()
@@ -87,8 +90,22 @@ public class GithubOrganization
               .followers(user.getFollowers())
               .build();
         })
+
         .sorted(OrderType.valueOf(order) == OrderType.DESC ?
             userSortMethod.get(sortField) : userSortMethod.get(sortField).reversed())
+
+        // Filter by both username and fullname
+        .filter(user ->
+            user.getUsername()
+                .toLowerCase()
+                .contains(filter.toLowerCase())
+
+                ||
+
+                user.getFullname()
+                    .toLowerCase()
+                    .contains(filter.toLowerCase()))
+
         .collect(Collectors.toList());
   }
 

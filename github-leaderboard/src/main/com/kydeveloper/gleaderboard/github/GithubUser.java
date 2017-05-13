@@ -1,4 +1,4 @@
-package com.kydeveloper.gleaderboard.launcher;
+package com.kydeveloper.gleaderboard.github;
 
 import java.io.IOException;
 
@@ -8,7 +8,6 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import com.google.common.cache.Cache;
-import com.kydeveloper.gleaderboard.github.UserAccessResponse;
 
 
 public class GithubUser

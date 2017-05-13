@@ -11,6 +11,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
+import com.kydeveloper.gleaderboard.github.GithubMachine;
+import com.kydeveloper.gleaderboard.rest.BoardResource;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 
 public class SimpleConfig extends GuiceServletContextListener
