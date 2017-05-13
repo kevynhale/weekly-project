@@ -72,12 +72,12 @@ public class GithubOrganization
           final CommitFields cf = user.getCommitData();
           return UserResponse.builder()
               .avatarUrl(user.getAvatar())
-              .githubUrl(null)
-              .fullname(null)
+              .githubUrl(user.getUrl())
+              .fullname(user.getFullname())
               .username(user.getUsername())
               .todayCommits(cf.getDaily())
               .yearCommits(cf.getYearly())
-              //.followers()
+              .followers(user.getFollowers())
               .build();
         }).collect(Collectors.toList());
   }

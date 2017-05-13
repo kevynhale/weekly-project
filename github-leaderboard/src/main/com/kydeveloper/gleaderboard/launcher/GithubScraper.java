@@ -9,13 +9,22 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpResponseException;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.kydeveloper.gleaderboard.github.UserAccessResponse;
 
 public class GithubScraper
 {
@@ -71,30 +80,39 @@ public class GithubScraper
     return Arrays.stream(yearString.split(" ")).findFirst().get().toString().replaceAll(",", "");
   }
   
-  public String getUserData(final String username)
+  public UserAccessResponse getUserData(final String username) throws IOException
   {
-    final String url = "https://api.github.com/users/" + username;
-    final HttpClient httpClient = new DefaultHttpClient();
-    final HttpGet request = new HttpGet(url);
-    request.addHeader("content-type", "application/json");
-    HttpResponse response;
+    try (CloseableHttpClient httpClient = HttpClients.createDefault())
+    {
+      final String url = "https://api.github.com/users/" + username;
+      final HttpGet request = new HttpGet(url);
+      request.addHeader("content-type", "application/json");
+      final ResponseHandler<UserAccessResponse> responseHandler =
+          new ResponseHandler<UserAccessResponse>()
+          {
+            @Override
+            public UserAccessResponse handleResponse(final HttpResponse response)
+                throws IOException
+            {
+              final StatusLine statusLine = response.getStatusLine();
+              final HttpEntity entity = response.getEntity();
 
-    try
-    {
-      response = httpClient.execute(request);
-      System.out.println("RESPONSE: " + response.getEntity().getContent());
-    }
-    catch (final ClientProtocolException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    catch (final IOException e)
-    {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+              if (statusLine.getStatusCode() >= 300)
+              {
+                throw new HttpResponseException(statusLine.getStatusCode(),
+                    statusLine.getReasonPhrase());
+              }
 
-    return null;
+              if (entity == null)
+              {
+                throw new ClientProtocolException("Response contains no content");
+              }
+
+              final Gson gson = new GsonBuilder().create();
+              return gson.fromJson(EntityUtils.toString(entity), UserAccessResponse.class);
+            }
+          };
+      return httpClient.execute(request, responseHandler);
+    }
   }
 }

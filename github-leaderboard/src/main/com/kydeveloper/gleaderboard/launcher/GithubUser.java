@@ -1,10 +1,14 @@
 package com.kydeveloper.gleaderboard.launcher;
 
+import java.io.IOException;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 import com.google.common.cache.Cache;
+import com.kydeveloper.gleaderboard.github.UserAccessResponse;
 
 
 public class GithubUser
@@ -18,7 +22,20 @@ public class GithubUser
   private final String orgName;
 
   @Getter
-  private final String avatar;
+  @Setter
+  private String avatar;
+
+  @Getter
+  @Setter
+  private String fullname;
+
+  @Getter
+  @Setter
+  private int followers;
+
+  @Getter
+  @Setter
+  private String url;
 
   private final Cache<String, CommitFields> userCache;
 
@@ -38,12 +55,9 @@ public class GithubUser
     this.scraper = scraper;
     this.orgName = orgName;
 
-    this.avatar = null;
-
     // Set up the Commit Cache on initialization of user
     this.getCommitData();
-    this.scraper.getUserData(username);
-    
+    this.updateGithubData();
   }
 
   public CommitFields getCommitData()
@@ -71,6 +85,23 @@ public class GithubUser
     }
 
     return userCache.asMap().get(username);
+  }
+
+  public void updateGithubData()
+  {
+    try
+    {
+      final UserAccessResponse resp = this.scraper.getUserData(username);
+      this.avatar = resp.getAvatarUrl();
+      this.followers = resp.getFollowers();
+      this.fullname = resp.getName();
+      this.url = resp.getHtmlUrl();
+    }
+    catch (final IOException e)
+    {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
 }

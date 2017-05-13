@@ -13,7 +13,7 @@ public class GleaderboardMain
 {
   public static void main(final String[] args) throws Exception
   {
-    final Server server = new Server(8040);
+    final Server server = new Server(8050);
     final ServletContextHandler root =
         new ServletContextHandler(server, "/", ServletContextHandler.SESSIONS);
 
