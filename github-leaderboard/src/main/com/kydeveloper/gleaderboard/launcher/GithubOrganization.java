@@ -1,5 +1,6 @@
 package com.kydeveloper.gleaderboard.launcher;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -9,6 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import com.google.common.cache.Cache;
+import com.kydeveloper.gleaderboard.api.OrderType;
 import com.kydeveloper.gleaderboard.api.UserResponse;
 
 
@@ -24,15 +26,19 @@ public class GithubOrganization
 
   private final Cache<String, CommitFields> userCache;
 
+  private final HashMap<String, Comparator> userSortMethod;
+
   @Builder
   public GithubOrganization(
       final GithubScraper scraper,
       final String orgName,
-      final Cache<String, CommitFields> userCache)
+      final Cache<String, CommitFields> userCache,
+      final HashMap<String, Comparator> userSortMethod)
   {
     this.scraper = scraper;
     this.orgName = orgName;
     this.userCache = userCache;
+    this.userSortMethod = userSortMethod;
     
     this.users = new HashMap<String, GithubUser>();
   }
@@ -65,8 +71,9 @@ public class GithubOrganization
     return data;
   }
 
-  public List<UserResponse> getUsers()
+  public List<UserResponse> getUsers(final String sortField, final String order)
   {
+
     return users.values().stream()
         .map(user -> {
           final CommitFields cf = user.getCommitData();
@@ -79,7 +86,10 @@ public class GithubOrganization
               .yearCommits(cf.getYearly())
               .followers(user.getFollowers())
               .build();
-        }).collect(Collectors.toList());
+        })
+        .sorted(OrderType.valueOf(order) == OrderType.DESC ?
+            userSortMethod.get(sortField) : userSortMethod.get(sortField).reversed())
+        .collect(Collectors.toList());
   }
 
 

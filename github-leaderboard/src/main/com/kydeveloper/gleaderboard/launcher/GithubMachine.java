@@ -1,5 +1,6 @@
 package com.kydeveloper.gleaderboard.launcher;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -9,6 +10,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
+import com.kydeveloper.gleaderboard.api.UserResponse;
 
 public class GithubMachine
 {
@@ -16,6 +18,8 @@ public class GithubMachine
   private final HashMap<String, GithubOrganization> organizations;
   
   private final Cache<String, CommitFields> userCache;
+  
+  private final HashMap<String, Comparator> userSortMethod;
 
   @NonNull
   private final GithubScraper scraper;
@@ -24,6 +28,8 @@ public class GithubMachine
   {
     organizations = new HashMap<String, GithubOrganization>();
     this.scraper = new GithubScraper();
+    this.userSortMethod = new HashMap<String, Comparator>();
+    this.setupUserMethod();
 
     final RemovalListener<String, CommitFields> removalListener =
         new RemovalListener<String, CommitFields>()
@@ -53,8 +59,18 @@ public class GithubMachine
               .orgName(name)
               .scraper(scraper)
               .userCache(userCache)
+              .userSortMethod(userSortMethod)
               .build());
     }
     return organizations.get(name);
+  }
+  
+  public void setupUserMethod()
+  {
+    userSortMethod.put("todayCommits", Comparator.comparing(UserResponse::getTodayCommits));
+    userSortMethod.put("yearCommits", Comparator.comparing(UserResponse::getYearCommits));
+    userSortMethod.put("followers", Comparator.comparing(UserResponse::getFollowers));
+    userSortMethod.put("fullname", Comparator.comparing(UserResponse::getFullname));
+    
   }
 }

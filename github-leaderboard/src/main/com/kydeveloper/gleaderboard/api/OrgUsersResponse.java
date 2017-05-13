@@ -27,4 +27,7 @@ public class OrgUsersResponse
 
   private final String userFilterString;
 
+  private final String orderBy;
+
+  private final OrderType order;
 }
