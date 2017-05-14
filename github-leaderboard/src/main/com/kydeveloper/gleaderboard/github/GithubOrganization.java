@@ -78,22 +78,6 @@ public class GithubOrganization
   {
 
     return users.values().stream()
-        .map(user -> {
-          final CommitFields cf = user.getCommitData();
-          return UserResponse.builder()
-              .avatarUrl(user.getAvatar())
-              .githubUrl(user.getUrl())
-              .fullname(user.getFullname())
-              .username(user.getUsername())
-              .todayCommits(cf.getDaily())
-              .yearCommits(cf.getYearly())
-              .followers(user.getFollowers())
-              .build();
-        })
-
-        .sorted(OrderType.valueOf(order) == OrderType.DESC ?
-            userSortMethod.get(sortField) : userSortMethod.get(sortField).reversed())
-
         // Filter by both username and fullname
         .filter(user ->
             user.getUsername()
@@ -105,6 +89,11 @@ public class GithubOrganization
                 user.getFullname()
                     .toLowerCase()
                     .contains(filter.toLowerCase()))
+
+        .map(user -> user.getResponse())
+
+        .sorted(OrderType.valueOf(order) == OrderType.DESC ?
+            userSortMethod.get(sortField) : userSortMethod.get(sortField).reversed())
 
         .collect(Collectors.toList());
   }

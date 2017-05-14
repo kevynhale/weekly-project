@@ -8,6 +8,7 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import com.google.common.cache.Cache;
+import com.kydeveloper.gleaderboard.api.UserResponse;
 
 
 public class GithubUser
@@ -101,6 +102,20 @@ public class GithubUser
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+  }
+
+  public UserResponse getResponse()
+  {
+    final CommitFields cf = getCommitData();
+    return UserResponse.builder()
+        .avatarUrl(getAvatar())
+        .githubUrl(getUrl())
+        .fullname(getFullname())
+        .username(getUsername())
+        .todayCommits(cf.getDaily())
+        .yearCommits(cf.getYearly())
+        .followers(getFollowers())
+        .build();
   }
 
 }

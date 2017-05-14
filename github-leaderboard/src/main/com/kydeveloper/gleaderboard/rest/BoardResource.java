@@ -15,6 +15,7 @@ import lombok.NonNull;
 import com.google.inject.Inject;
 import com.kydeveloper.gleaderboard.api.OrderType;
 import com.kydeveloper.gleaderboard.api.OrgUsersResponse;
+import com.kydeveloper.gleaderboard.api.UserResponse;
 import com.kydeveloper.gleaderboard.github.GithubMachine;
 import com.kydeveloper.gleaderboard.github.GithubOrganization;
 
@@ -63,12 +64,13 @@ public class BoardResource
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/org/{name}/adduser/{username}")
-  public String addUser(
+  public UserResponse addUser(
       @PathParam("name") final String name,
       @PathParam("username") final String username) throws Exception
   {
-    githubMachine.getOrg(name).addUser(username);
-    return username;
+    final GithubOrganization org = githubMachine.getOrg(name);
+    org.addUser(username);
+    return org.getUsers().get(username).getResponse();
   }
 
   private <T> List<T> getPage(final List<T> list, final int pageSize, final int page)
