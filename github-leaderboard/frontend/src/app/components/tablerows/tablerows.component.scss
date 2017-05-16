@@ -7,9 +7,21 @@ ul {
 		height:100px;
 		padding: 0 5px;
 		background-color:white;
+		div {
+			&.selected {
+
+				background: rgba(230,223,138,0.20);
+
+			}
+		}
 
 		&:nth-child(even) {
 			background: #ECECEC;
+			div {
+				&.selected {
+					background: #EAE9D8;
+				}
+			}
 		}
 		div {
 			height:100px;

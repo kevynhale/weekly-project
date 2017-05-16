@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-innerheader',
@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./innerheader.component.scss']
 })
 export class InnerHeaderComponent {
+	@Input()
+	org: String;
 
 }

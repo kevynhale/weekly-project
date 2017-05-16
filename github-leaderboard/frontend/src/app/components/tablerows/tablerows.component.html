@@ -1,43 +1,23 @@
 <div class="tablerows">
 	<ul>
-		<li>
+		<li *ngFor="let user of users">
 			<div class="number">
 			#
 			</div>
 			<div class="image">
-			Avatar
+			<img src="{{user.avatarUrl}}" height='40'>
 			</div>
 			<div class="name">
-			Name
+			{{user.fullname}}
 			</div>
-			<div class="today">
-			Con Today
-			</div>
-			<div class="year">
-			Yearly Con.
-			</div>
-			<div class="followers">
-			Followers
-			</div>
-		</li>
-		<li>
-			<div class="number">
-			#
-			</div>
-			<div class="image">
-			Avatar
-			</div>
-			<div class="name">
-			Name
-			</div>
-			<div class="today">
-			Con Today
+			<div class="today selected">
+			{{user.todayCommits}}
 			</div>
 			<div class="year">
-			Yearly Con.
+			{{user.yearCommits}}
 			</div>
 			<div class="followers">
-			Followers
+			{{user.followers}}
 			</div>
 		</li>
 	</ul>

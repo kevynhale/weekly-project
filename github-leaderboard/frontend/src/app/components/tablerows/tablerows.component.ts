@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import { UserService } from '../../services/user.service'
+import 'rxjs/add/operator/catch';
 
 @Component({
   selector: 'app-tablerows',
@@ -6,5 +9,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./tablerows.component.scss']
 })
 export class TableRowsComponent {
+	@Input()
+	org: String;
+	users: any;
 
+	constructor(
+		private userService: UserService) {
+	}
+
+	ngOnChanges() {
+    	this.userService.getUser(this.org)
+    		.subscribe( post => this.setUser(post),
+						err => console.log(err));
+	}
+
+	setUser(user) {
+		this.users = user.users
+		console.log(user)
+	}
 }
