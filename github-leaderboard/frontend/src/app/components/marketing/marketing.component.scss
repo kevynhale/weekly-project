@@ -1,0 +1,33 @@
+@import '../../colors.scss';
+
+.marketing {
+	display:flex;
+	width:100%;
+	margin-bottom:30px;
+
+	.normal {
+		flex:1 15%;
+		height:150px;
+
+		&.one {
+			background: #B2A1BD;
+		}
+		&.two {
+			background: #A1AEBD;
+		}
+		&.three {
+			background: #A1BDBD;
+		}
+		&.four {
+			background: #BDA1B4;
+		}
+	}
+	.gutter {
+		flex:1 2%;
+	}
+	.large {
+		flex:1 28%;
+		height:150px;	
+		background: #E6DF8A;
+	}
+}

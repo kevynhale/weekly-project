@@ -1,0 +1,64 @@
+@import '../../colors.scss';
+
+.title {
+	display:flex;
+	max-width: 100%;
+	margin-bottom:15px;
+
+	.logo {
+		flex: 1 25%;
+	    min-width:275px;
+	    height:140px;
+	    background-color: #736D80;
+	    line-height:140px;
+	    text-align:center;
+	    font-size:38px;
+	    font-weight:bold;
+	    color:white;
+	    font-family:AvenirNext-Heavy, sans-serif;
+
+	    .gold {
+	    	color:#F9F576;
+	    }
+	}
+	.organization {
+		flex: 1 75%;
+		min-width:200px;
+		margin-left:30px;
+		margin-bottom:15px;
+
+		.name {
+			margin-top:15px;
+			margin-bottom:15px;
+			img {
+				height:45px;
+				width: 45px;
+				background-color:#FAFAFA;
+				-webkit-filter: grayscale(100%);
+				position:relative;
+				margin-right:10px;
+				top:3px;
+			}
+			span {
+				font-family: AvenirNext-Bold;
+				font-size: 48px;
+				color: #736D80;
+			}
+		}
+
+		.search {
+			input {
+				/* Rectangle 3: */
+				width:calc(100% - 50px);
+				background: #FAFAFA;
+				border: 1px solid #D8D8D8;
+				height:40px;
+				/* Search/Create Organi: */
+				font-family: AvenirNext-Regular;
+				font-size: 24px;
+				color: #736D80;
+				padding-left: 50px;
+			}
+		}
+	}
+}

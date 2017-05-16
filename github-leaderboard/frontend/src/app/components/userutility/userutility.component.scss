@@ -1,0 +1,57 @@
+@import '../../colors.scss';
+
+.userutility {
+	margin-bottom:30px;
+	.bar {
+		margin-bottom:30px;
+		background-color: #736D80;
+		height:50px;
+		padding:5px 20px;
+
+		ul {
+			display:inline-block;
+			list-style:none;
+			margin:0px;
+			padding:0px;
+			vertical-align:middle;
+
+			li {
+				display:inline-block;
+				padding: 3px 10px;
+				/* Rectangle 6: */
+				background: #978FA9;
+				border: 1px solid #B2A7CA;
+				/* + Add User: */
+				font-family: AvenirNext-Medium;
+				font-size: 18px;
+				color: #FFFFFF;
+				letter-spacing: 0;
+				text-shadow: 0 1px 0 rgb(66, 63, 74);
+				margin-right:10px;
+				position:relative;
+				top:8px;
+
+				&:hover {
+					background-color:#736D80;
+					cursor:pointer;
+				}
+
+			}
+		}
+
+	}
+	.search {
+			input {
+				/* Rectangle 3: */
+				width:calc(100% - 50px);
+				background: #FAFAFA;
+				border: 1px solid #D8D8D8;
+				height:40px;
+				/* Search/Create Organi: */
+				font-family: AvenirNext-Regular;
+				font-size: 24px;
+				color: #736D80;
+				padding-left: 50px;
+			}
+		}
+}

@@ -1,0 +1,46 @@
+ul {
+	margin:0px;
+	padding:0px;
+	li {
+		display:flex;
+		width: calc( 100% - 10px);
+		height:100px;
+		padding: 0 5px;
+		background-color:white;
+
+		&:nth-child(even) {
+			background: #ECECEC;
+		}
+		div {
+			height:100px;
+			line-height:100px;
+			font-family: AvenirNext-Bold;
+			font-size: 20px;
+			color: gray;
+			display:inline-block;
+			flex:1;
+			text-align:center;
+			font-weight:300;
+			padding: 0 5px;
+			&.number {
+				flex:1 3%;	
+			}
+			&.image {
+				flex:1 20%;
+			}
+			&.name {
+				flex:1 35%;
+			}
+			&.today {
+				flex:1 20%;
+			}
+			&.year {
+				flex:1 20%;
+			}
+			&.followers {
+				flex:1 20%;
+				border:0px;
+			}
+		}
+	}
+}
