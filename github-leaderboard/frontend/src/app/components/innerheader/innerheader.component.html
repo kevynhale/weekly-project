@@ -10,7 +10,9 @@
 
 		</div>
 		<div class="search">
-			<input type="text" placeholder="Search/Create Organization...">
+			<img src="images/magnify.png">
+			<input (click)="changeShow()" type="text" placeholder="Search/Create Organization...">
+			<app-dropdown [show]="showResults"></app-dropdown>
 		</div>
 	</div>
 </div>

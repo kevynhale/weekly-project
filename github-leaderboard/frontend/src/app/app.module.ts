@@ -11,6 +11,7 @@ import { MarketingComponent } from './components/marketing/marketing.component'
 import { UserUtilityComponent } from './components/userutility/userutility.component'
 import { TableHeaderComponent } from './components/tableheader/tableheader.component'
 import { TableRowsComponent } from './components/tablerows/tablerows.component'
+import { DropdownComponent } from './components/dropdown/dropdown.component'
 
 import { UserService } from './services/user.service'
 
@@ -24,7 +25,8 @@ import { AppRouterModule } from './app-routing.module'
     UserUtilityComponent,  
     TableHeaderComponent,
     TableRowsComponent,
-    OrgComponent
+    OrgComponent,
+    DropdownComponent
   ],
   imports: [
     BrowserModule,

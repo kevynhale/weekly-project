@@ -1,8 +1,8 @@
 <div class="tablerows">
 	<ul>
-		<li *ngFor="let user of users">
+		<li *ngFor="let user of users; let i = index">
 			<div class="number">
-			#
+			 {{i + 1}}
 			</div>
 			<div class="image">
 			<img src="{{user.avatarUrl}}" height='40'>

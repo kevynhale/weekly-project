@@ -1,0 +1,16 @@
+div {
+	background:white;
+	border:1px solid white;
+	height:0px;
+	overflow:hidden;
+	position:absolute;
+	width:calc(100% - 2px);
+
+	&.show {
+		height: auto;
+		min-height:150px;
+		max-height:200px;
+		overflow:scroll;
+		border:1px solid #D8D8D8;
+	}
+}

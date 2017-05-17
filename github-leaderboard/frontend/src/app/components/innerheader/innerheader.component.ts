@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input} from '@angular/core';
+
 
 @Component({
   selector: 'app-innerheader',
@@ -8,5 +9,16 @@ import { Component, Input } from '@angular/core';
 export class InnerHeaderComponent {
 	@Input()
 	org: String;
+
+	showResults: boolean;
+
+	ngOnInit() {
+		this.showResults = false;
+	}
+
+	changeShow() {
+		console.log('change')
+		this.showResults = !this.showResults
+	}
 
 }

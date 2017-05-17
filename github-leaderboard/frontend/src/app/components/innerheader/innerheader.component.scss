@@ -47,9 +47,18 @@
 		}
 
 		.search {
+			position:relative;
+			img {
+				position:absolute;
+				top:2px;
+				left:4px;
+				height:42px;
+				width:42px;
+				opacity:0.6;
+			}
 			input {
 				/* Rectangle 3: */
-				width:calc(100% - 50px);
+				width:calc(100% - 52px);
 				background: #FAFAFA;
 				border: 1px solid #D8D8D8;
 				height:40px;
@@ -58,6 +67,8 @@
 				font-size: 24px;
 				color: #736D80;
 				padding-left: 50px;
+				padding-right:0px;
+				outline:none;
 			}
 		}
 	}

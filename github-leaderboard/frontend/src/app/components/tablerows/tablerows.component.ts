@@ -18,7 +18,7 @@ export class TableRowsComponent {
 	}
 
 	ngOnChanges() {
-    	this.userService.getUser(this.org)
+    	this.userService.getUsers(this.org)
     		.subscribe( post => this.setUser(post),
 						err => console.log(err));
 	}

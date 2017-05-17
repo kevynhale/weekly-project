@@ -11,8 +11,8 @@ export class UserService {
 	constructor(private http: Http) {}
 
 
-	getUser(org) {
-		let url =  this.base + "/org/" + org
+	getUsers(org) {
+		let url =  this.base + "/org/" + org + "?page_size=50"
 		let headers    = new Headers({'Content-Type': 'application/json'})
 		let options    = new RequestOptions({ headers: headers })			
 		return this.http.get(url, options)
