@@ -9,8 +9,31 @@ export class DropdownComponent {
 	@Input()
 	show: boolean;
 
+	@Input()
+	criteria: String;
+
+	@Input()
+	results: any;
+
 
 	ngOnInit() {
 		
+	}
+
+	getDisabled() {
+		if (this.results != null) {
+			console.log(this.criteria, "set disabled")
+			return this.results.filter(e => e.name == this.criteria).length > 0
+		}
+	}
+
+	checkImage(image:string)
+	{
+		if (image != null || image != "") {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

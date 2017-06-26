@@ -12,5 +12,55 @@ div {
 		max-height:200px;
 		overflow:scroll;
 		border:1px solid #D8D8D8;
+		box-shadow: 2px 2px 5px #736d80;
+	}
+	ul  {
+		padding:0px;
+		margin:0px;
+		list-style:none;
+		a {
+			text-decoration:none;
+			//min-height:53px;
+			display:block;
+
+			&:visited, &:active, &:focus {
+				text-decoration:none;
+			}
+
+			li {
+				padding:10px 15px;
+				font-size:24px;
+				font-family:AvenirNext-Heavy, sans-serif;
+				color:#494551;
+				text-transform: capitalize;
+				background-color:transparent;
+
+				img {
+					vertical-align: middle;
+					display: inline;
+					margin-right:5px;
+				}	
+
+			}
+
+			&:nth-of-type(even) {
+				li {
+					background-color: rgba(216, 216, 216, 0.31);
+				}
+			}
+
+			&:hover {
+				li {
+					background-color: rgba(178, 161, 189, 0.41);
+					cursor:pointer;
+				}
+			}
+
+			&.disabled {
+				pointer-events: none;
+   				cursor: default;
+   				display:block;
+			}		
+		}
 	}
 }

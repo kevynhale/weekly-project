@@ -23,6 +23,10 @@ export class OrgComponent {
 		this.subscription = this.route.params.subscribe(params => {
 			this.id = String(params['org'])
 		})
+
+		if (this.id == null) {
+			this.id = "Welcome!"
+		}
 	}
 
 }

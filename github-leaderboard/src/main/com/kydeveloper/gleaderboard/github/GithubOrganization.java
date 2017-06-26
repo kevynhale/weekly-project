@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import com.google.common.cache.Cache;
 import com.kydeveloper.gleaderboard.api.OrderType;
@@ -27,6 +28,10 @@ public class GithubOrganization
   private final Cache<String, CommitFields> userCache;
 
   private final HashMap<String, Comparator> userSortMethod;
+
+  @Getter
+  @Setter
+  private String imageUrl;
 
   @Builder
   public GithubOrganization(

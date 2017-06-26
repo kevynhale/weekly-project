@@ -18,9 +18,11 @@ export class TableRowsComponent {
 	}
 
 	ngOnChanges() {
-    	this.userService.getUsers(this.org)
-    		.subscribe( post => this.setUser(post),
+		if (this.org != "undefined") {
+    		this.userService.getUsers(this.org)
+    			.subscribe( post => this.setUser(post),
 						err => console.log(err));
+    	}
 	}
 
 	setUser(user) {

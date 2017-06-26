@@ -1,9 +1,12 @@
 package com.kydeveloper.gleaderboard.rest;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -14,6 +17,7 @@ import lombok.NonNull;
 
 import com.google.inject.Inject;
 import com.kydeveloper.gleaderboard.api.OrderType;
+import com.kydeveloper.gleaderboard.api.OrgResponse;
 import com.kydeveloper.gleaderboard.api.OrgUsersResponse;
 import com.kydeveloper.gleaderboard.api.UserResponse;
 import com.kydeveloper.gleaderboard.github.GithubMachine;
@@ -34,8 +38,46 @@ public class BoardResource
   
   @GET
   @Produces(MediaType.APPLICATION_JSON)
+  @Path("/orgs")
+  public List<OrgResponse> getOrgs(
+      @DefaultValue("") @QueryParam("filter") final String filter)
+  {
+    return githubMachine.getOrgs().stream()
+        .filter(org -> org
+            .getName()
+            .toLowerCase()
+            .contains(filter.toLowerCase()))
+        .sorted(Comparator.comparing(OrgResponse::getName))
+        .collect(Collectors.toList());
+  }
+  
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
   @Path("/org/{name}")
-  public OrgUsersResponse getOrg(
+  public OrgResponse getOrg(
+      @PathParam("name") final String name)
+  {
+    final GithubOrganization org = githubMachine.getOrg(name);
+    return OrgResponse.builder().name(org.getOrgName()).image(org.getImageUrl()).build();
+  }
+
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/orgimage/{name}")
+  public OrgResponse setOrgImage(
+      @PathParam("name") final String name,
+      @QueryParam("image") final String image)
+  {
+    final GithubOrganization org = githubMachine.getOrg(name);
+    org.setImageUrl(image);
+    return OrgResponse.builder().name(org.getOrgName()).image(org.getImageUrl()).build();
+  }
+
+
+  @GET
+  @Produces(MediaType.APPLICATION_JSON)
+  @Path("/orgusers/{name}")
+  public OrgUsersResponse getOrgUsers(
       @PathParam("name") final String name,
       @DefaultValue("todayCommits") @QueryParam("order_by") final String orderBy,
       @DefaultValue("DESC") @QueryParam("order") final String order,

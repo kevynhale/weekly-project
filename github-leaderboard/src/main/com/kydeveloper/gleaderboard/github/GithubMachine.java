@@ -2,7 +2,9 @@ package com.kydeveloper.gleaderboard.github;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import lombok.NonNull;
 
@@ -10,6 +12,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
+import com.kydeveloper.gleaderboard.api.OrgResponse;
 import com.kydeveloper.gleaderboard.api.UserResponse;
 
 public class GithubMachine
@@ -47,6 +50,16 @@ public class GithubMachine
         .maximumSize(10000)
         .removalListener(removalListener)
         .build(new UserCacheLoader());
+  }
+
+  public List<OrgResponse> getOrgs()
+  {
+    return organizations.values().stream()
+        .map(org -> OrgResponse.builder()
+            .name(org.getOrgName())
+            .image(org.getImageUrl())
+            .build())
+        .collect(Collectors.toList());
   }
 
   public GithubOrganization getOrg(final String name)

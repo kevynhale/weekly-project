@@ -38,11 +38,23 @@
 				position:relative;
 				margin-right:10px;
 				top:3px;
+				opacity:.5;
+
+				&.note-plus {
+					background-color:black;
+
+					&:hover {
+						opacity:1;
+						background-color:#494551;
+						cursor:pointer;
+					}
+				}
 			}
 			span {
 				font-family: AvenirNext-Bold;
 				font-size: 48px;
 				color: #736D80;
+				text-transform:uppercase;
 			}
 		}
 
@@ -55,6 +67,7 @@
 				height:42px;
 				width:42px;
 				opacity:0.6;
+				z-index:6;
 			}
 			input {
 				/* Rectangle 3: */
@@ -69,6 +82,8 @@
 				padding-left: 50px;
 				padding-right:0px;
 				outline:none;
+				position:relative;
+				z-index:5;
 			}
 		}
 	}

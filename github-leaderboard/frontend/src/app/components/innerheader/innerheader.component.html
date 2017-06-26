@@ -4,15 +4,17 @@
 	</div>
 	<div class="organization">
 		<div class="name">
-			<img src="http://jive.com/wp-content/themes/jive_wordpress/img/jive-logo.jpg">
+			<img *ngIf="checkImage(orgImage)" [src]="orgImage" />
+			<img *ngIf="!checkImage(orgImage)" src="images/note-plus.png" class="note-plus" />
 
-			<span>{{org}}</span>
+			<span>{{org == "undefined" ? "Welcome!" : org}}</span>
 
 		</div>
 		<div class="search">
 			<img src="images/magnify.png">
-			<input (click)="changeShow()" type="text" placeholder="Search/Create Organization...">
-			<app-dropdown [show]="showResults"></app-dropdown>
+			<input #input (click)="changeShow()" type="text" placeholder="Search/Create Organization..." 
+			(input)="filterOrg(input.value)">
+			<app-dropdown [show]="showResults" [criteria]="filter" [results]="orgs"></app-dropdown>
 		</div>
 	</div>
 </div>

@@ -1,4 +1,17 @@
 <div [ngClass]="{'show': show}" >
-test
-
+	<ul>
+		<a [ngClass]="{'disabled': getDisabled()}" routerLink="/org/{{criteria}}">
+			<li>
+				<img src="images/account-multiple-plus.png" height="35">
+				{{criteria}}
+			</li>
+		</a>
+		<a routerLink="/org/{{org.name}}" *ngFor="let org of results;">
+			<li>
+				<img *ngIf="!checkImage(org.image)" src="{{org.image}}" height="30">
+				<img *ngIf="checkImage(org.image)" src="images/githubleaderboardicon.png" height="30">
+				{{org.name}}
+			</li>
+		</a>
+	</ul>
 </div>
